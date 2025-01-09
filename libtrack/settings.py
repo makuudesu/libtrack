@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-tdww-9=!ab0_)$813aep*e^tiay__^a236l448v_(n+8u8rxie
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '0.0.0.0']
+ALLOWED_HOSTS = ['makudesu.pythonanywhere.com','127.0.0.1', 'localhost', '0.0.0.0']
 
 
 # Application definition
@@ -123,6 +123,8 @@ STATICFILES_DIRS = [
 
 # Static file storage (for production)
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATIC_ROOT = '/home/makudesu/libtrackApp/static'
+MEDIA_ROOT = '/home/makudesu/libtrackApp/media'
 
 
 # Default primary key field type
