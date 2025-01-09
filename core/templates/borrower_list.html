@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrower List{% endblock %}
+
+{% block content %}
+<!-- Back Button to Dashboard -->
+<div class="flex justify-start mb-6 px-4 sm:px-6 md:px-8">
+    <a href="{% url 'dashboard' %}" 
+        class="bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-600 hover:text-white transition-all flex items-center shadow-md">
+        <i class="fas fa-arrow-left mr-2"></i> Back
+    </a>
+</div>
+
+<!-- Title Section with Icon and Text -->
+<div class="flex flex-col sm:flex-row justify-between items-center mb-6 px-4 sm:px-6 md:px-8">
+    <div class="flex items-center mb-4 sm:mb-0">
+        <i class="fas fa-id-card text-white mr-3 text-2xl sm:text-3xl"></i>
+        <h1 class="text-2xl sm:text-3xl font-serif font-bold text-white tracking-wide leading-tight">
+            BORROWER LIST
+        </h1>
+    </div>
+
+    <!-- Search Bar -->
+    <form method="get" action="{% url 'borrower_list' %}" class="w-full sm:w-auto">
+        <div class="flex items-center">
+            <input type="text" name="search" value="{{ request.GET.search }}" placeholder="Search borrowers..."
+                class="w-full sm:w-64 px-3 py-2 text-sm sm:text-base bg-gray-800 border border-gray-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-green-500">
+            <button type="submit"
+                class="bg-green-700 text-white px-4 py-2 rounded-md ml-2 text-sm sm:text-base hover:bg-green-600 transition-all shadow-md">
+                Search
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Table with Borrowers List -->
+<div class="overflow-x-auto px-4 sm:px-6 md:px-8">
+    <table class="table-auto w-full bg-gray-800 text-white shadow-md rounded-lg text-sm sm:text-base">
+        <thead>
+            <tr class="bg-gray-700">
+                <th class="px-4 py-2 text-left text-gray-300">First Name</th>
+                <th class="px-4 py-2 text-left text-gray-300">Last Name</th>
+                <th class="px-4 py-2 text-left text-gray-300">Email</th>
+                <th class="px-4 py-2 text-center text-gray-300">Borrow Count</th>
+                <th class="px-4 py-2 text-center text-gray-300">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for borrower in borrowers %}
+            <tr class="hover:bg-gray-600">
+                <td class="border-b border-gray-700 px-4 py-2 break-words">{{ borrower.first_name }}</td>
+                <td class="border-b border-gray-700 px-4 py-2 break-words">{{ borrower.last_name }}</td>
+                <td class="border-b border-gray-700 px-4 py-2 break-words">{{ borrower.email }}</td>
+                <td class="border-b border-gray-700 px-4 py-2 text-center">{{ borrower.borrow_count }}</td>
+                <td class="border-b border-gray-700 px-4 py-2 text-center">
+                    <div class="flex flex-col sm:flex-row justify-center gap-2">
+                        <a href="{% url 'edit_borrower' borrower.id %}" 
+                            class="bg-green-700 text-white px-4 py-2 rounded hover:bg-green-600 hover:text-white transition-all shadow-md">
+                            Edit
+                        </a>
+                        <button type="button" 
+                            class="bg-red-500 text-white px-4 py-2 rounded delete-btn transition-all shadow-md"
+                            data-item-id="{{ borrower.id }}" data-item-type="borrower">
+                            Delete
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center py-4 text-gray-400">No borrowers available.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Add New Borrower Button -->
+    <div class="flex justify-center mt-6">
+        <a href="{% url 'add_borrower' %}" 
+            class="bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:text-white transition-all duration-300 hover:bg-green-600 hover:shadow-lg inline-block text-sm sm:text-base font-medium">
+            Add New Borrower
+        </a>
+    </div>
+</div>
+{% endblock %}

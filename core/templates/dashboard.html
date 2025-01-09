@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - LibTrack</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col justify-between min-h-screen relative">
+    <!-- Navigation Menu -->
+    <nav class="bg-gray-800 p-4 fixed top-0 left-0 right-0 z-10">
+        <div class="container mx-auto flex justify-between items-center">
+            <!-- Logo Section -->
+            <div class="flex items-center space-x-6">
+                <a href="/" class="text-white text-2xl font-bold flex items-center space-x-4">
+                    <img src="{% static 'images/libtrackLogo.jpg' %}" alt="LibTrack Logo" class="w-12 h-12">
+                    <span class="uppercase font-serif text-3xl">LibTrack</span>
+                </a>
+            </div>            
+
+            <!-- Top-right Buttons with Icons -->
+            <div class="flex items-center space-x-6 hidden md:flex">
+                <a href="/books" class="text-white hover:text-green-500 transition duration-300 flex items-center">
+                    <i class="fas fa-book mr-2"></i> Books
+                </a>
+                <a href="/borrowers" class="text-white hover:text-green-500 transition duration-300 flex items-center">
+                    <i class="fas fa-users mr-2"></i> Borrowers
+                </a>
+                <a href="/transactions" class="text-white hover:text-green-500 transition duration-300 flex items-center">
+                    <i class="fas fa-exchange-alt mr-2"></i> Transactions
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-white relative">
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-transform duration-600 transform" id="line-1"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1 transition-transform duration-600 transform" id="line-2"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-transform duration-600 transform" id="line-3"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-gray-800 p-4 absolute top-16 left-0 right-0 z-10 transition-transform transform translate-y-full ease-in-out duration-500">
+        <a href="/books" class="text-white hover:text-green-500 transition duration-300 flex items-center mb-4">
+            <i class="fas fa-book mr-2"></i> Books
+        </a>
+        <a href="/borrowers" class="text-white hover:text-green-500 transition duration-300 flex items-center mb-4">
+            <i class="fas fa-users mr-2"></i> Borrowers
+        </a>
+        <a href="/transactions" class="text-white hover:text-green-500 transition duration-300 flex items-center mb-4">
+            <i class="fas fa-exchange-alt mr-2"></i> Transactions
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="text-center px-6 py-4 flex-grow pt-24">
+        <h1 class="text-2xl sm:text-4xl font-extrabold font-serif text-white tracking-wide mt-2 sm:mt-0 uppercase">
+            <i class="fas fa-book-reader mr-2"></i> Library Dashboard
+        </h1>
+        <p class="text-xl mb-6 text-green-500 font-semibold">Streamlined Management for Modern Libraries</p>
+    
+        <div class="max-w-2xl mx-auto mb-12">
+            <p class="text-gray-300 text-base mb-6 font-semibold">
+                Welcome to LibTrack, your trusted tool for managing library operations effortlessly. Stay organized with real-time insights into borrowing activity and book availability.
+            </p>
+        </div>
+    </div>    
+
+        <!-- Stats Cards -->
+<div class="flex flex-wrap justify-center gap-8 mb-12">
+    <!-- Book Availability Pie Chart -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Book Availability</h3>
+        <canvas id="availabilityChart" class="mt-4"></canvas>
+        <p class="text-gray-300 text-sm mt-4">This pie chart displays the current availability status of the books, showing how many are available or borrowed.</p>
+    </div>
+
+    <!-- Borrowers by Borrow Count -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Borrowers by Borrow Count</h3>
+        <canvas id="borrowerChart" class="mt-4"></canvas>
+        <p class="text-gray-300 text-sm mt-4">
+            This chart shows how borrowers are distributed based on the total number of books they have borrowed. It helps to identify frequent library users and gauge borrowing activity.
+        </p>
+    </div>
+
+    <!-- Books Borrowed Per Day -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Books Borrowed Per Day</h3>
+        <canvas id="transactionChart" class="mt-4"></canvas>
+        <p class="text-gray-300 text-sm mt-4">
+            This chart shows the number of books borrowed on a daily basis, helping to visualize trends and identify peak borrowing days. It can be useful for understanding usage patterns and planning inventory.
+        </p>
+    </div>
+
+    <!-- Total Books -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Total Books</h3>
+        <p class="text-gray-300 text-3xl font-bold">{{ total_books }}</p>
+        <p class="text-gray-300 text-sm mt-4">Total number of books in the library.</p>
+    </div>
+
+    <!-- Total Borrowers -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Total Borrowers</h3>
+        <p class="text-gray-300 text-3xl font-bold">{{ total_borrowers }}</p>
+        <p class="text-gray-300 text-sm mt-4">Total number of borrowers in the system.</p>
+    </div>
+
+    <!-- Total Transactions -->
+    <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transition-transform transform hover:scale-105 shadow-lg">
+        <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Total Transactions</h3>
+        <p class="text-gray-300 text-3xl font-bold">{{ total_transactions }}</p>
+        <p class="text-gray-300 text-sm mt-4">Total number of transactions in the system.</p>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <body class="bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col min-h-screen">
+        <!-- Main Content -->
+        <div class="text-center px-6 py-4 flex-grow pt-24">
+            <!-- Your main content goes here -->
+        </div>
+    
+        <!-- Footer -->
+        <footer class="bg-gray-800 text-white py-6 px-6 mt-auto">
+            <div class="flex justify-between items-center flex-wrap">
+                <p class="text-sm w-full sm:w-auto text-center sm:text-left">&copy; 2024 Library Management System. All Rights Reserved.</p>
+                <div class="text-white flex items-center w-full sm:w-auto justify-center sm:justify-end">
+                    <i class="fas fa-clock text-green-500 text-xl mr-2"></i>
+                    <p id="datetime" class="text-sm"></p>
+                </div>
+            </div>
+        </footer>        
+    </body>
+    
+
+    <!-- Pass Django context variables as JSON using json_script -->
+    {{ borrower_count_data|json_script:"borrower-data" }}
+    {{ daily_transactions_data|json_script:"transaction-data" }}
+    {{ availability_data|json_script:"availability-data" }}
+    {{ total_books|json_script:"total-books" }}
+    {{ total_borrowers|json_script:"total-borrowers" }}
+    {{ total_transactions|json_script:"total-transactions" }}
+
+    <!-- Link to the external JavaScript file -->
+    <script src="{% static 'js/dashboard.js' %}"></script>
+
+</body>
+
+</html>

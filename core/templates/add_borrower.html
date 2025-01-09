@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}
+{% if borrower %}Edit Borrower{% else %}Add Borrower{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="relative max-w-lg mx-auto">
+    <!-- Back Button -->
+    <a href="{% url 'borrower_list' %}"
+        class="absolute top-0 left-0 bg-green-700 text-white px-4 py-2 rounded-lg shadow-md hover:bg-green-600 hover:text-white transition duration-200 inline-block transform hover:scale-105">
+        <i class="fas fa-arrow-left mr-2"></i>Back
+    </a>
+
+    <!-- Title -->
+    <h1 class="text-3xl sm:text-4xl font-bold text-center text-white mb-8 flex items-center justify-center space-x-3 pt-16">
+        {% if borrower %}
+        <i class="fas fa-user-edit text-3xl sm:text-4xl"></i>
+        {% else %}
+        <i class="fas fa-user-plus text-3xl sm:text-4xl"></i>
+        {% endif %}
+        <span class="font-serif tracking-wide">{% if borrower %}EDIT BORROWER{% else %}ADD BORROWER{% endif %}</span>
+    </h1>
+</div>
+
+<!-- Form -->
+<form method="POST" class="bg-white font-semibold p-8 rounded-lg shadow-lg max-w-lg mx-auto">
+    {% csrf_token %}
+
+    <div class="mb-6">
+        <label for="{{ form.first_name.id_for_label }}" class="block text-lg font-medium text-green-700">First
+            Name</label>
+        {{ form.first_name }}
+    </div>
+
+    <div class="mb-6">
+        <label for="{{ form.last_name.id_for_label }}" class="block text-lg font-medium text-green-700">Last Name</label>
+        {{ form.last_name }}
+    </div>
+
+    <div class="mb-6">
+        <label for="{{ form.email.id_for_label }}" class="block text-lg font-medium text-green-700">Email</label>
+        {{ form.email }}
+    </div>
+
+    <button type="submit"
+        class="w-full bg-green-700 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-200">Save</button>
+</form>
+
+{% if borrower %}
+<!-- Trigger button for the delete confirmation modal -->
+<div class="mt-6 max-w-lg mx-auto">
+    <button type="button"
+        class="delete-btn w-full bg-red-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-200 ease-in-out max-w-lg mx-auto block text-center mt-6"
+        data-item-id="{{ borrower.id }}" data-item-type="borrower">
+        Delete
+    </button>
+</div>
+
+<!-- Hidden URL for deleting the borrower -->
+<span id="deleteUrl" data-url="{% url 'delete_borrower' borrower.id %}" class="hidden"></span>
+{% endif %}
+{% endblock %}

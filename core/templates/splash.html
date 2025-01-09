@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to LibTrack</title>
+    {% load static %}
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-b from-gray-800 to-gray-900 text-white flex flex-col justify-between min-h-screen relative">
+    <!-- Background Image with Dark Overlay -->
+    <div class="absolute inset-0 z-0">
+        <img src="{% static 'images/libtrackLogo.jpg' %}" alt="LibTrack Logo" class="w-full h-full object-cover opacity-50">
+        <!-- Dark overlay to darken the background -->
+        <div class="absolute inset-0 bg-black opacity-40"></div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="text-center px-6 py-4 flex-grow relative z-10">
+        <h1 class="text-3xl sm:text-4xl font-extrabold font-serif text-white tracking-wide mt-2 sm:mt-0 uppercase animate__animated animate__fadeInDown">
+            Welcome to LibTrack
+        </h1>
+        <p class="text-xl mb-6 text-green-500 font-bold">Transforming Library Management with Ease and Efficiency</p>
+
+        <div class="max-w-2xl mx-auto mb-12">
+            <p class="text-gray-300 text-base mb-6 font-bold">
+                LibTrack is a comprehensive library management system designed to help librarians easily track books, borrowers, and transactions in a seamless, digital environment. Say goodbye to outdated manual tracking methods and hello to an organized, efficient system.
+            </p>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-8 mb-12">
+            <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transform transition-transform hover:scale-105 hover:shadow-2xl">
+                <i class="fas fa-book text-green-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Manage Books</h3>
+                <p class="text-gray-300 text-base">Easily track book availability, details, and conditions.</p>
+            </div>
+            <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transform transition-transform hover:scale-105 hover:shadow-2xl">
+                <i class="fas fa-user text-green-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Track Borrowers</h3>
+                <p class="text-gray-300 text-base">Keep detailed records of borrowers and their borrowing history.</p>
+            </div>
+            <div class="bg-white bg-opacity-10 border border-opacity-20 p-6 rounded-lg w-60 text-center transform transition-transform hover:scale-105 hover:shadow-2xl">
+                <i class="fas fa-exchange-alt text-green-500 text-4xl mb-4"></i>
+                <h3 class="text-xl font-semibold text-green-500 mb-2 font-bold">Transaction History</h3>
+                <p class="text-gray-300 text-base">Manage and review all transactions for accurate record-keeping.</p>
+            </div>
+        </div>
+
+        <a href="{% url 'dashboard' %}" class="bg-green-500 text-white py-3 px-8 rounded-lg text-xl font-semibold inline-block transform transition-all hover:scale-110 hover:bg-green-600 mb-16">
+            Get Started
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 flex justify-center items-center px-6">
+        <p class="text-sm">&copy; 2024 Library Management System. All Rights Reserved.</p>
+    </footer>
+</body>
+
+</html>
