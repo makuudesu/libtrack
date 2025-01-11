@@ -244,18 +244,5 @@ def mark_as_returned(request, id):
 
 # Splash Screen
 def splash_screen(request):
-    # Fetch total stats
-    total_books = Book.objects.count()
-    total_borrowers = Borrower.objects.count()
-    total_transactions = Transaction.objects.count()
-
-    # Get the current date and time
-    current_datetime = timezone.now().strftime('%B %d, %Y %H:%M:%S')
-
-    return render(request, 'splash.html', {
-        'total_books': total_books,
-        'total_borrowers': total_borrowers,
-        'total_transactions': total_transactions,
-        'current_datetime': current_datetime,
-    })
+    return render(request, 'splash.html')
 

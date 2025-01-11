@@ -104,7 +104,6 @@ if (menuToggle && mobileMenu) {
     });
 }
 
-
 // Display the current date and time in the footer
 const datetimeElement = document.getElementById('datetime');
 const updateDatetime = () => {
@@ -113,3 +112,34 @@ const updateDatetime = () => {
     datetimeElement.textContent = `${dateStr}`;
 };
 setInterval(updateDatetime, 1000);
+
+// Get all the stat cards
+const cards = document.querySelectorAll('[id$="-card"]');
+
+// Function to toggle the card size and visibility
+function toggleCardSize(cardId) {
+    const card = document.getElementById(cardId);
+    const chart = card.querySelector('canvas');
+    const otherCards = document.querySelectorAll('[id$="-card"]:not(#' + cardId + ')');
+
+    // Toggle active class on the clicked card
+    card.classList.toggle('w-full');
+    card.classList.toggle('h-[600px]');
+    card.classList.toggle('z-50'); // Bring to the front when expanded
+    card.classList.toggle('transition-all');
+    chart.classList.toggle('h-[500px]'); // Expand chart height
+
+    // Collapse other cards
+    otherCards.forEach((otherCard) => {
+        otherCard.classList.remove('w-full', 'h-[600px]', 'z-50');
+        otherCard.querySelector('canvas').classList.remove('h-[500px]');
+    });
+}
+
+// Add event listeners to each card
+cards.forEach((card) => {
+    card.addEventListener('click', function() {
+        const cardId = card.id; // Get the id of the clicked card
+        toggleCardSize(cardId);
+    });
+});
